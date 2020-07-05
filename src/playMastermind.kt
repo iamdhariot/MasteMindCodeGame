@@ -1,6 +1,7 @@
 package mastermind
 
 import kotlin.random.Random
+
 // instead of colors we are using A..F letters
 
 val ALPHABET = 'A'..'F'
@@ -18,8 +19,8 @@ fun main() {
  *
  * */
 fun playMastermind(
-        differentLetters: Boolean,
-        secret: String = generateSecret(differentLetters)
+    differentLetters: Boolean,
+    secret: String = generateSecret(differentLetters)
 ) {
     var evaluation: Evaluation
 
@@ -27,9 +28,11 @@ fun playMastermind(
         print("Your guess: ")
         var guess = readLine()!! // player 2 guess string
         while (hasErrorsInInput(guess)) {
-            println("Incorrect input: $guess. " +
-                    "It should consist of $CODE_LENGTH characters from $ALPHABET. " +
-                    "Please try again.")
+            println(
+                "Incorrect input: $guess. " +
+                        "It should consist of $CODE_LENGTH characters from $ALPHABET. " +
+                        "Please try again."
+            )
             guess = readLine()!!
         }
         // evaluated result
@@ -37,8 +40,10 @@ fun playMastermind(
         if (evaluation.isComplete()) {
             println("The guess is correct!")
         } else {
-            println("Right positions: ${evaluation.rightPosition}; " +
-                    "wrong positions: ${evaluation.wrongPosition}.")
+            println(
+                "Right positions: ${evaluation.rightPosition}; " +
+                        "wrong positions: ${evaluation.wrongPosition}."
+            )
         }
 
     } while (!evaluation.isComplete())
