@@ -3,7 +3,7 @@ package mastermind
 data class Evaluation(val rightPosition: Int, val wrongPosition: Int)
 
 fun evaluateGuess(secret: String, guess: String): Evaluation {
-    //println(secret)// for checking
+    println(secret)// for checking
     val rightPosition = getGuessInRightPosition(secret, guess)
     val wrongPosition = getGuessInWrongPosition(secret, guess)
 
@@ -26,20 +26,20 @@ fun getGuessInWrongPosition(secret: String, guess: String): Int {
     var wrongPosition = 0
     var newSecret = ""
     var newGuess = ""
+
     for (i in 0 until secret.length) {
         if (secret[i] != guess[i]) {
-            newSecret += secret[i]  // if guess and secret letters position is not same or they are not matched on same position then store guess and secret string in newGuess newSecret
+            newSecret += secret[i]  // if guess and secret letters position are not same or they are not matched on same position then store guess and secret string in newGuess newSecret
             newGuess += guess[i]
         }
     }
     val evaluatedChar = mutableListOf<Char>()
-    if (!newSecret.isEmpty()) {
-        for (i in 0 until guess.length) {
+    if (newSecret.isNotEmpty()) {
+        for (i in 0 until secret.length) {
             var char = guess[i] // taking one char/ letter at a time for evaluation
             // check this char is evaluated or not
             if (!evaluatedChar.contains(char)) {
-                val totalCharMatchedInSecret =
-                    countMatched(newSecret, char) // total number of char matched in newSecret
+                val totalCharMatchedInSecret = countMatched(newSecret, char) // total number of char matched in newSecret
                 val totalCharMatchedInGuess = countMatched(newGuess, char)  // total number of char matched in newGuess
                 wrongPosition += if (totalCharMatchedInSecret == totalCharMatchedInGuess || totalCharMatchedInSecret > totalCharMatchedInGuess) totalCharMatchedInGuess else totalCharMatchedInSecret
                 evaluatedChar.add(char)
@@ -48,6 +48,7 @@ fun getGuessInWrongPosition(secret: String, guess: String): Int {
         }
     }
     return wrongPosition
+
 }
 
 // counting the number of char found in this given string
